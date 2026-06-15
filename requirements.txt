@@ -1,0 +1,37 @@
+# Dependencies for AIO_Module1.
+#
+# Pinned to a validated environment (Python 3.12). The local dev machine is
+# CPU-only; torch/torchvision are pinned without a local build tag so a GPU
+# server installs the appropriate (CUDA) wheel for the same version.
+
+# Deep learning
+torch==2.12.0
+torchvision==0.27.0
+
+# Backbones and parameter-efficient fine-tuning (peft pulls in transformers,
+# accelerate, huggingface_hub, safetensors as transitive dependencies)
+timm==1.0.27
+peft==0.19.1
+
+# Benchmark dataset
+medmnist==3.0.2
+
+# Image preprocessing (CLAHE, histogram equalization)
+opencv-python==4.13.0.92
+scikit-image==0.26.0
+
+# Numerics, metrics, statistics
+numpy==2.4.6
+pandas==3.0.3
+scikit-learn==1.9.0
+scipy==1.17.1
+
+# Config, utilities, progress
+PyYAML==6.0.3
+tqdm==4.68.2
+
+# Visualization
+matplotlib==3.11.0
+
+# Testing
+pytest==9.1.0

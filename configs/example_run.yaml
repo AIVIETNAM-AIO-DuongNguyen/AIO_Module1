@@ -1,0 +1,57 @@
+# Canonical run schema. One YAML file describes exactly one experiment run.
+# This example documents the intended fields; the training harness reads a file
+# like this and produces a single run. Copy and edit it per experiment.
+
+run:
+  name: pneumonia_plocal_lora_r10_s0   # unique, human-readable run id
+  seed: 0                              # fixed seed for full reproducibility
+  output_dir: runs                     # where logs/metrics/checkpoints are written
+
+data:
+  dataset: pneumoniamnist              # any MedMNIST flag: pneumoniamnist | dermamnist | retinamnist | bloodmnist
+  resolution: 64                       # image size; must be a MedMNIST size (28 | 64 | 128 | 224)
+  regime: 0.10                         # fraction of training labels available: 1.0 | 0.25 | 0.10 | 0.05
+  root: data                           # directory for downloaded MedMNIST files (gitignored)
+  as_rgb: true                         # expand grayscale to 3 channels for ImageNet-pretrained backbones
+  preprocessing: p_local               # p0 | p_global | p_local
+  clahe:                               # only used when preprocessing == p_local
+    clip_limit: 2.0
+    tile_grid_size: 8
+  augmentation:                        # applied identically to every preprocessing arm; train split only
+    horizontal_flip:
+      enabled: true
+      p: 0.5
+    vertical_flip:
+      enabled: false
+      p: 0.5
+    rotation:
+      enabled: true
+      degrees: 10
+
+model:
+  backbone: resnet50                   # any timm model id, e.g. resnet50 | resnet18 | vit_small_patch16_224
+  pretrained: true
+  transfer: lora                       # lp | ft | lora
+  lora:                                # only used when transfer == lora
+    rank: 8
+    alpha: 16
+    conv_target: kernel3               # CNN backbones: all | kernel3 (3x3 convs only); ignored for ViT (targets qkv)
+    # target_modules: [layer1.0.conv2] # optional explicit override of the automatic per-family selection
+
+train:
+  epochs: 30
+  batch_size: 64
+  num_workers: 0                       # DataLoader workers (0 is deterministic and safe on Windows)
+  optimizer:
+    name: adamw                        # any torch.optim class name (adam, adamw, sgd, rmsprop, nadam, ...)
+    lr: 0.001
+    kwargs:                            # optimizer-specific extras (weight_decay, momentum, betas, ...)
+      weight_decay: 0.0001
+  selection:
+    monitor: auroc                     # val metric used to keep the best checkpoint
+    early_stopping_patience: 0         # 0 disables early stopping (best checkpoint is still tracked)
+
+eval:
+  metrics: [auroc, accuracy, macro_f1, ece]
+  split: test                          # official MedMNIST test split
+  ece_bins: 15                         # number of confidence bins for ECE
