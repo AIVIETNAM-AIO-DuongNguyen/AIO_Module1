@@ -6,10 +6,16 @@ from src.ui.bootstrap import ensure_repo_on_path
 
 ensure_repo_on_path()
 
-from src.ui.components import render_disclaimer
+from src.ui.components.layout import (
+    init_page,
+    page_title_suffix,
+    render_disclaimer,
+    render_page_header,
+    render_sidebar_appearance,
+    sidebar_section,
+)
 from src.ui.components.paths import path_input
 from src.ui.config import (
-    APP_TITLE,
     DEFAULT_DATA_ROOT,
     DEFAULT_RESULTS_CSV,
     DEFAULT_RUNS_DIR,
@@ -28,11 +34,7 @@ from src.ui.services.experiment import (
     run_experiment_with_logs,
 )
 
-st.set_page_config(page_title=f"Run experiment — {APP_TITLE}", layout="wide")
-render_disclaimer()
-
-st.header("Run experiment")
-st.caption(f"Form fields mirror `{EXAMPLE_RUN_CONFIG}`. Paths are relative to the repo root.")
+init_page(page_title_suffix("Run experiment"))
 
 if "experiment_logs" not in st.session_state:
     st.session_state.experiment_logs = []
@@ -40,7 +42,8 @@ if "last_run_results" not in st.session_state:
     st.session_state.last_run_results = None
 
 with st.sidebar:
-    st.subheader("Paths")
+    render_sidebar_appearance()
+    sidebar_section("Paths")
     output_dir = path_input("Output directory", DEFAULT_RUNS_DIR, key="run_output_dir")
     data_root = path_input("Data root", DEFAULT_DATA_ROOT, key="run_data_root")
     results_csv = path_input("Results CSV", DEFAULT_RESULTS_CSV, key="run_results_csv")
@@ -52,11 +55,18 @@ with st.sidebar:
         else:
             st.warning(status.message)
 
+render_disclaimer()
+render_page_header(
+    "Run experiment",
+    subtitle=f"Configure a single run. Form fields mirror `{EXAMPLE_RUN_CONFIG}`.",
+)
+
 gpu_status = check_gpu_environment()
-if gpu_status.available:
-    st.success(gpu_status.message)
-else:
-    st.warning(gpu_status.message)
+with st.container(border=True):
+    if gpu_status.available:
+        st.success(gpu_status.message)
+    else:
+        st.warning(gpu_status.message)
 
 tab_run, tab_data, tab_model, tab_train = st.tabs(["Run", "Data", "Model", "Train & eval"])
 
@@ -166,8 +176,9 @@ config_dict = build_config_dict(
     run_name=run_name,
 )
 
-st.subheader("YAML preview")
-st.code(config_to_yaml(config_dict), language="yaml")
+with st.container(border=True):
+    st.subheader("YAML preview")
+    st.code(config_to_yaml(config_dict), language="yaml")
 
 validation_error: str | None = None
 try:
@@ -195,9 +206,11 @@ if st.button("Run experiment", type="primary", disabled=run_disabled, use_contai
         st.session_state.experiment_running = False
 
 if st.session_state.last_run_results:
-    st.subheader("Last run metrics")
-    st.json(st.session_state.last_run_results)
+    with st.container(border=True):
+        st.subheader("Last run metrics")
+        st.json(st.session_state.last_run_results)
 
 if st.session_state.experiment_logs:
-    st.subheader("Log")
-    st.code("\n".join(st.session_state.experiment_logs), language=None)
+    with st.container(border=True):
+        st.subheader("Log")
+        st.code("\n".join(st.session_state.experiment_logs), language=None)

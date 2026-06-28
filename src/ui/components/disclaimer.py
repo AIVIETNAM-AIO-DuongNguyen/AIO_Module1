@@ -1,9 +1,5 @@
-"""Shared disclaimer banner."""
+"""Shared disclaimer banner — use ``layout.render_disclaimer`` instead."""
 
-import streamlit as st
+from .layout import render_disclaimer
 
-from ..config import DISCLAIMER
-
-
-def render_disclaimer() -> None:
-    st.warning(DISCLAIMER)
+__all__ = ["render_disclaimer"]

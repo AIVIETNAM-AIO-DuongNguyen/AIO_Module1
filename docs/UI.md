@@ -104,6 +104,13 @@ streamlit run src/ui/app.py
 
 Default URL: http://localhost:8501
 
+## Appearance
+
+- Default Streamlit theme: light teal palette (`.streamlit/config.toml`)
+- **Dark mode:** toggle in the sidebar on any page (persists for the session)
+- Layout: max-width content (~1180px), card sections, responsive padding on smaller laptop widths
+- Custom CSS lives in `src/ui/theme.py` and is injected via `src/ui/components/layout.py`
+
 ## Configuration
 
 | Setting | Default (relative) | Override |

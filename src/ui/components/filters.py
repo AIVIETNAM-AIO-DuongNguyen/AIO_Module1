@@ -26,6 +26,9 @@ def _options(values: pd.Series, label: str) -> list[str | None]:
 
 def render_results_filters(frame: pd.DataFrame, *, key_prefix: str = "") -> FilterState:
     """Render filter widgets in the sidebar and return the selected state."""
+    from .layout import sidebar_section
+
+    sidebar_section("Filters")
     if frame.empty:
         st.sidebar.caption("No results to filter.")
         return FilterState()

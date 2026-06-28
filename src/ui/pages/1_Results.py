@@ -6,23 +6,34 @@ from src.ui.bootstrap import ensure_repo_on_path
 
 ensure_repo_on_path()
 
-from src.ui.components import render_disclaimer
+from src.ui.components.layout import (
+    init_page,
+    page_title_suffix,
+    render_disclaimer,
+    render_page_header,
+    render_sidebar_appearance,
+    sidebar_section,
+)
 from src.ui.components.filters import apply_filters, render_results_filters
 from src.ui.components.formatting import format_regime
 from src.ui.components.paths import path_input
 from src.ui.components.run_detail import render_run_detail
-from src.ui.config import APP_TITLE, DEFAULT_RESULTS_CSV, DEFAULT_RUNS_DIR
+from src.ui.config import DEFAULT_RESULTS_CSV, DEFAULT_RUNS_DIR
 from src.ui.services import load_results, summarize_completion
 
-st.set_page_config(page_title=f"Results — {APP_TITLE}", layout="wide")
-render_disclaimer()
-
-st.header("Results")
+init_page(page_title_suffix("Results"))
 
 with st.sidebar:
-    st.subheader("Data source")
+    render_sidebar_appearance()
+    sidebar_section("Data source")
     results_path = path_input("Results CSV", DEFAULT_RESULTS_CSV, key="results_csv")
     runs_path = path_input("Runs directory", DEFAULT_RUNS_DIR, key="results_runs_dir")
+
+render_disclaimer()
+render_page_header(
+    "Results",
+    subtitle="Filter completed runs and inspect metrics, artifacts, and configuration.",
+)
 
 table = load_results(results_path)
 
@@ -41,11 +52,12 @@ if table.missing_columns:
     st.stop()
 
 completion = summarize_completion(table.frame)
-summary_cols = st.columns(4)
-summary_cols[0].metric("Unique runs", completion.unique_runs)
-summary_cols[1].metric("Matrix progress", f"{completion.unique_runs}/{completion.expected}")
-summary_cols[2].metric("Rows in CSV", completion.completed)
-summary_cols[3].metric("Datasets", len(completion.datasets))
+with st.container(border=True):
+    summary_cols = st.columns(4)
+    summary_cols[0].metric("Unique runs", completion.unique_runs)
+    summary_cols[1].metric("Matrix progress", f"{completion.unique_runs}/{completion.expected}")
+    summary_cols[2].metric("Rows in CSV", completion.completed)
+    summary_cols[3].metric("Datasets", len(completion.datasets))
 
 filter_state = render_results_filters(table.frame, key_prefix="results_")
 filtered = apply_filters(table, filter_state)
@@ -58,17 +70,18 @@ display = filtered.copy()
 if "regime" in display.columns:
     display["regime_label"] = display["regime"].map(format_regime)
 
-st.subheader("Experiment runs")
-display_path = table.source_path_display or results_path
-st.caption(f"{len(filtered)} run(s) shown · source: `{display_path}`")
+with st.container(border=True):
+    st.subheader("Experiment runs")
+    display_path = table.source_path_display or results_path
+    st.caption(f"{len(filtered)} run(s) shown · source: `{display_path}`")
 
-selection = st.dataframe(
-    display,
-    use_container_width=True,
-    hide_index=True,
-    on_select="rerun",
-    selection_mode="single-row",
-)
+    selection = st.dataframe(
+        display,
+        use_container_width=True,
+        hide_index=True,
+        on_select="rerun",
+        selection_mode="single-row",
+    )
 
 selected_rows = selection.selection.rows if selection.selection else []
 if not selected_rows:
@@ -78,6 +91,6 @@ if not selected_rows:
 selected = filtered.iloc[selected_rows[0]]
 run_name = str(selected["run"])
 
-st.divider()
-st.subheader(f"Run detail — `{run_name}`")
-render_run_detail(run_name, runs_dir=runs_path)
+with st.container(border=True):
+    st.subheader(f"Run detail — `{run_name}`")
+    render_run_detail(run_name, runs_dir=runs_path)
