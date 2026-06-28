@@ -14,6 +14,7 @@ from src.ui.config import (
     DEFAULT_RESULTS_CSV,
     DEFAULT_RUNS_DIR,
 )
+from src.ui.services import load_results, summarize_completion
 
 st.set_page_config(
     page_title=APP_TITLE,
@@ -48,16 +49,21 @@ with col_overview:
     )
 
 with col_status:
-    st.subheader("Data paths")
-    st.code(str(DEFAULT_RUNS_DIR), language=None)
-    results_exists = DEFAULT_RESULTS_CSV.is_file()
-    if results_exists:
-        st.success(f"Found `{DEFAULT_RESULTS_CSV.name}` — ready for Phase 2 dashboard.")
+    st.subheader("Experiment progress")
+    results_table = load_results()
+    completion = summarize_completion(results_table.frame)
+    if results_table.found:
+        st.metric("Recorded runs", f"{completion.unique_runs} / {completion.expected}")
+        st.caption(
+            f"{completion.completed} rows in `{DEFAULT_RESULTS_CSV.name}` "
+            f"({len(completion.datasets)} datasets)."
+        )
     else:
         st.info(
             f"No `{DEFAULT_RESULTS_CSV.name}` yet. Run an experiment via CLI:\n\n"
             "`python scripts/run_experiment.py --config configs/example_run.yaml`"
         )
+    st.code(str(DEFAULT_RUNS_DIR), language=None)
 
 st.divider()
 
@@ -67,8 +73,8 @@ st.markdown(
 | Phase | Focus | Status |
 |-------|-------|--------|
 | 0 | Stack, scaffold, docs | Done |
-| 1 | Data services (`results.csv`, aggregation) | Next |
-| 2 | Results table and run detail | Planned |
+| 1 | Data services (`results.csv`, aggregation) | Done |
+| 2 | Results table and run detail | Next |
 | 3 | Charts and decision guide | Planned |
 | 4 | Run experiment from form | Planned |
 | 5 | Matrix batch orchestration | Planned |

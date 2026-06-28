@@ -54,7 +54,7 @@ Legend: `[x]` done · `[ ]` not started · `[~]` in progress.
 ## UI dashboard (researcher-facing)
 
 - [x] Phase 0 — Streamlit stack, `src/ui/` scaffold, `docs/UI.md`, `scripts/run_ui.py`.
-- [ ] Phase 1 — Data services over `results.csv` / `metrics.json`.
+- [x] Phase 1 — Data services over `results.csv` / `metrics.json`.
 - [ ] Phase 2 — Results table and run detail pages.
 - [ ] Phase 3 — Charts and decision guide.
 - [ ] Phase 4 — Run one experiment from the UI.

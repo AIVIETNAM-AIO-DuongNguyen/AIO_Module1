@@ -111,10 +111,26 @@ Default URL: http://localhost:8501
 | Runs directory | `runs/` | Sidebar on home page (Phase 2) |
 | Core matrix size | 162 | `src/ui/config.py` |
 
+## Data services (Phase 1)
+
+Import from `src.ui.services`:
+
+| Function | Purpose |
+|----------|---------|
+| `load_results(path?)` | Parse `results.csv`; empty table if missing |
+| `filter_results(table, **axes)` | Filter by dataset, preprocessing, transfer, regime, seed |
+| `get_run_detail(run_name)` | Load `metrics.json` + artifact paths |
+| `find_config_path` / `load_run_config` | Resolve YAML by run name |
+| `aggregate_results(frame)` | Mean ± std over seeds per axis combo |
+| `best_combinations(aggregated)` | Best combo per dataset × regime |
+| `summarize_completion(frame)` | Progress toward 162 core runs |
+
+Fixtures for tests live under `tests/fixtures/ui/`.
+
 ## Phase checklist
 
 - [x] Phase 0 — stack, flows, scaffold, dependencies
-- [ ] Phase 1 — data services (`results.csv`, `metrics.json`, aggregation)
+- [x] Phase 1 — data services (`results.csv`, `metrics.json`, aggregation)
 - [ ] Phase 2 — results dashboard MVP
 - [ ] Phase 3 — charts and decision guide
 - [ ] Phase 4 — run experiment from UI
