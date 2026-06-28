@@ -131,7 +131,7 @@ Fixtures for tests live under `tests/fixtures/ui/`.
 
 - [x] Phase 0 — stack, flows, scaffold, dependencies
 - [x] Phase 1 — data services (`results.csv`, `metrics.json`, aggregation)
-- [ ] Phase 2 — results dashboard MVP
-- [ ] Phase 3 — charts and decision guide
+- [x] Phase 2 — results dashboard MVP
+- [x] Phase 3 — charts and decision guide
 - [ ] Phase 4 — run experiment from UI
 - [ ] Phase 5 — matrix orchestration

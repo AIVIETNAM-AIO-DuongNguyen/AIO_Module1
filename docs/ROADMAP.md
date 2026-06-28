@@ -55,8 +55,8 @@ Legend: `[x]` done · `[ ]` not started · `[~]` in progress.
 
 - [x] Phase 0 — Streamlit stack, `src/ui/` scaffold, `docs/UI.md`, `scripts/run_ui.py`.
 - [x] Phase 1 — Data services over `results.csv` / `metrics.json`.
-- [ ] Phase 2 — Results table and run detail pages.
-- [ ] Phase 3 — Charts and decision guide.
+- [x] Phase 2 — Results table and run detail pages.
+- [x] Phase 3 — Charts and decision guide.
 - [ ] Phase 4 — Run one experiment from the UI.
 - [ ] Phase 5 — Matrix batch orchestration.
 

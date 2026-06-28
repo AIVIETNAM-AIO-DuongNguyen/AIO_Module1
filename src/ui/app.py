@@ -30,8 +30,8 @@ st.caption(APP_TAGLINE)
 
 st.markdown(
     """
-Use the sidebar to open a section. Pages marked *coming soon* are scaffolded for
-later phases; **Results** and **Analysis** land in Phases 2–3.
+Use the sidebar to open **Results** (filter runs and inspect artifacts) or
+**Analysis** (charts and the decision guide).
 """
 )
 
@@ -74,9 +74,9 @@ st.markdown(
 |-------|-------|--------|
 | 0 | Stack, scaffold, docs | Done |
 | 1 | Data services (`results.csv`, aggregation) | Done |
-| 2 | Results table and run detail | Next |
-| 3 | Charts and decision guide | Planned |
-| 4 | Run experiment from form | Planned |
+| 2 | Results table and run detail | Done |
+| 3 | Charts and decision guide | Done |
+| 4 | Run experiment from form | Next |
 | 5 | Matrix batch orchestration | Planned |
 """
 )
