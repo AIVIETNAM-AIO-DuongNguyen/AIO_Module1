@@ -32,6 +32,10 @@ tqdm==4.68.2
 
 # Visualization
 matplotlib==3.11.0
+plotly==6.8.0
+
+# Researcher dashboard (Phase 0+)
+streamlit==1.58.0
 
 # Testing
 pytest==9.1.0

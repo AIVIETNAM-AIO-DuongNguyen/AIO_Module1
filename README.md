@@ -11,16 +11,17 @@ This is a **methodological** study of generalization techniques. It is **not** a
 
 ## Project status
 
-Planning complete; repository scaffolded. Implementation has not started.
+Phase 0 harness and UI scaffold are in place. Training runs via CLI; the
+Streamlit dashboard is scaffolded for results and analysis (Phases 1–3).
 
 ## Repository layout
 
 ```
 configs/      One YAML per experiment run
-src/          Source packages (data, models, training, evaluation, utils)
+src/          Source packages (data, models, training, evaluation, utils, ui)
 tests/        CPU-friendly pytest smoke tests
-scripts/      Standalone scripts (e.g. GPU environment check)
-docs/note/    Research notes, indexed in docs/note/README.md
+scripts/      Standalone scripts (GPU check, run experiment, launch UI)
+docs/         ROADMAP, UI stack and user flows (docs/UI.md)
 ```
 
 ## Getting started
@@ -52,9 +53,16 @@ python scripts/run_experiment.py --config configs/example_run.yaml
 Results are written to `<output_dir>/<run_name>/` (checkpoint and `metrics.json`)
 and appended to `<output_dir>/results.csv`.
 
+Launch the researcher dashboard:
+
+```bash
+python scripts/run_ui.py
+```
+
 ## Documentation
 
 - [docs/ROADMAP.md](docs/ROADMAP.md) — progress tracker and next steps.
+- [docs/UI.md](docs/UI.md) — UI stack, user flows, and phase checklist.
 
 ## Experiment scope (locked core matrix)
 
