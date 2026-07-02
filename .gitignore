@@ -1,6 +1,7 @@
 # Virtual environments
 .venv/
 venv/
+ENV/
 env/
 
 # Downloaded datasets and run outputs
@@ -10,6 +11,11 @@ runs/
 # Generated experiment configs and assignment manifests
 configs/core/
 
+# PyTorch checkpoints (large binaries)
+*.pt
+*.pth
+*.ckpt
+
 # Python caches and build artifacts
 __pycache__/
 *.py[cod]
@@ -17,11 +23,15 @@ __pycache__/
 .eggs/
 build/
 dist/
+.ipynb_checkpoints/
 
 # Test and coverage caches
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Local design plans and scratchpad files
+plan*.md
 
 # Editor / OS noise
 .idea/
