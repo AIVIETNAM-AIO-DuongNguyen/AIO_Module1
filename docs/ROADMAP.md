@@ -50,6 +50,15 @@ Legend: `[x]` done · `[ ]` not started · `[~]` in progress.
 - [ ] Figures, report (Intro/Related/Method/Experiments/Results/Discussion), slides.
 - [ ] Reproducible repository with a README to reproduce all results.
 
+## UI dashboard (researcher-facing)
+
+- [x] Phase 0 — Streamlit stack, `src/ui/` scaffold, `docs/UI.md`, `scripts/run_ui.py`.
+- [x] Phase 1 — Data services over `results.csv` / `metrics.json`.
+- [x] Phase 2 — Results table and run detail pages.
+- [x] Phase 3 — Charts and decision guide.
+- [x] Phase 4 — Run one experiment from the UI.
+- [x] Phase 5 — Matrix batch orchestration.
+
 ## Notes for tracking
 - The core matrix is locked: extensions (third dataset, regime 25%, ViT-S
   robustness, CLAHE param sweeps) go in a separate set, not the 162 core runs.

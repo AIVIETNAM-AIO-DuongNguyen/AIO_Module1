@@ -1,0 +1,7 @@
+run,dataset,preprocessing,backbone,transfer,regime,seed,trainable_params,wall_clock_s,auroc,accuracy,macro_f1,ece
+pneumoniamnist_p0_lp_r100_s0,pneumoniamnist,p0,resnet50,lp,1.0,0,2048,12.5,0.81,0.72,0.70,0.08
+pneumoniamnist_p0_lp_r100_s1,pneumoniamnist,p0,resnet50,lp,1.0,1,2048,12.1,0.83,0.74,0.71,0.07
+pneumoniamnist_p0_lp_r100_s2,pneumoniamnist,p0,resnet50,lp,1.0,2,2048,11.9,0.82,0.73,0.72,0.09
+pneumoniamnist_p_local_lora_r10_s0,pneumoniamnist,p_local,resnet50,lora,0.1,0,45000,45.0,0.76,0.68,0.66,0.11
+pneumoniamnist_p_local_lora_r10_s1,pneumoniamnist,p_local,resnet50,lora,0.1,1,45000,44.2,0.78,0.69,0.67,0.10
+dermamnist_p_global_ft_r5_s0,dermamnist,p_global,resnet50,ft,0.05,0,23500000,120.0,0.71,0.65,0.63,0.12

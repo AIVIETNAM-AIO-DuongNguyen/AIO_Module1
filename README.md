@@ -13,18 +13,20 @@ This is a **methodological** study of generalization techniques. It is **not** a
 
 Foundation harness complete: data loading, the three preprocessing arms, the
 three transfer strategies, training/evaluation, config generation for the core
-matrix, and CPU smoke tests all run end to end. Next is baseline reproduction on
-a GPU server and running the 162-run core matrix. See
-[docs/ROADMAP.md](docs/ROADMAP.md) for the detailed status.
+matrix, and CPU smoke tests all run end to end. A Streamlit dashboard on top of
+the harness provides results browsing, analysis, single-run launching, and
+matrix orchestration. Next is baseline reproduction on a GPU server and running
+the 162-run core matrix. See [docs/ROADMAP.md](docs/ROADMAP.md) for the detailed
+status.
 
 ## Repository layout
 
 ```
 configs/      One YAML per experiment run
-src/          Source packages (data, models, training, evaluation, utils)
+src/          Source packages (data, models, training, evaluation, utils, ui)
 tests/        CPU-friendly pytest smoke tests
-scripts/      Standalone scripts (e.g. GPU environment check)
-docs/note/    Research notes, indexed in docs/note/README.md
+scripts/      Standalone scripts (GPU check, run experiment, launch UI)
+docs/         ROADMAP, UI stack and user flows (docs/UI.md)
 ```
 
 ## Getting started
@@ -56,6 +58,12 @@ python scripts/run_experiment.py --config configs/example_run.yaml
 Results are written to `<output_dir>/<run_name>/` (checkpoint and `metrics.json`)
 and appended to `<output_dir>/results.csv`.
 
+Launch the researcher dashboard:
+
+```bash
+python scripts/run_ui.py
+```
+
 ## Tests
 
 CPU-friendly smoke tests cover every module and run on the local machine:
@@ -69,6 +77,7 @@ The training smoke test skips cleanly if the MedMNIST download is unavailable.
 ## Documentation
 
 - [docs/ROADMAP.md](docs/ROADMAP.md) — progress tracker and next steps.
+- [docs/UI.md](docs/UI.md) — UI stack, user flows, and phase checklist.
 - [docs/note/](docs/note/README.md) — research notes, indexed by topic.
 
 ## Experiment scope (locked core matrix)
