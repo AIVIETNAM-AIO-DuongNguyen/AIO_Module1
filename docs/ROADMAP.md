@@ -1,7 +1,6 @@
 # Roadmap & progress tracker
 
-Tracks what is done and what is next. Phases follow the 4-week plan in
-[research_plan_merged_project.md](../research_plan_merged_project.md). Roles:
+Tracks what is done and what is next, organised as a four-week plan. Roles:
 Lead, Ops (AI pipeline), Model (AI model), Data (data engineer), QA.
 
 Legend: `[x]` done · `[ ]` not started · `[~]` in progress.

@@ -1,0 +1,30 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Downloaded datasets and run outputs
+data/
+runs/
+
+# Generated experiment configs and assignment manifests
+configs/core/
+
+# Python caches and build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Test and coverage caches
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editor / OS noise
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

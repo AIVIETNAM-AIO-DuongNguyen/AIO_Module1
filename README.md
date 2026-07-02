@@ -11,7 +11,11 @@ This is a **methodological** study of generalization techniques. It is **not** a
 
 ## Project status
 
-Planning complete; repository scaffolded. Implementation has not started.
+Foundation harness complete: data loading, the three preprocessing arms, the
+three transfer strategies, training/evaluation, config generation for the core
+matrix, and CPU smoke tests all run end to end. Next is baseline reproduction on
+a GPU server and running the 162-run core matrix. See
+[docs/ROADMAP.md](docs/ROADMAP.md) for the detailed status.
 
 ## Repository layout
 
@@ -52,9 +56,20 @@ python scripts/run_experiment.py --config configs/example_run.yaml
 Results are written to `<output_dir>/<run_name>/` (checkpoint and `metrics.json`)
 and appended to `<output_dir>/results.csv`.
 
+## Tests
+
+CPU-friendly smoke tests cover every module and run on the local machine:
+
+```bash
+pytest -q
+```
+
+The training smoke test skips cleanly if the MedMNIST download is unavailable.
+
 ## Documentation
 
 - [docs/ROADMAP.md](docs/ROADMAP.md) — progress tracker and next steps.
+- [docs/note/](docs/note/README.md) — research notes, indexed by topic.
 
 ## Experiment scope (locked core matrix)
 
